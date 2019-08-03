@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Hello World · Tangrc&#39;s Studio</title>
+    <title>Tangrc&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/" >Tangrc&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Hello World</a>
+                <a href="#" class="post-name"></a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Hello World
+            [Untitled Post]
             <!-- 404 -->
             
         </h1>
@@ -266,12 +266,12 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">73</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">782</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/08/01</span>
+                    <span class="post-intro-time">2019/08/03</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -395,28 +395,73 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>###Ubuntu 16.04 安装 hexo<br>本文将介绍如何在ubuntu 16.04中搭建hexo静态博客，最终将其部署到Github上。</p>
+<p>####第一步：安装nodejs<br>因为hexo是基于nodejs的，所以我们第一步是要进行nodejs的安装。但Ubuntu源中的nodejs是旧版本，所以需要在安装后更新nodejs</p>
+<blockquote>
+<p>sudo apt-get install nodejs<br>sudo apt install nodejs-legacy<br>sudo apt install npm</p>
+</blockquote>
+<p>####第二步：更换成淘宝的镜像<br>若不更换，会很慢</p>
+<blockquote>
+<p>sudo npm config set registry <a href="https://registry.npm.taobao.org" target="_blank" rel="noopener">https://registry.npm.taobao.org</a></p>
+</blockquote>
+<p>接着我们可以同行过<code>sudo npm config list</code>来查看是否生效  </p>
+<p><img src="./assets/hexo1.png" alt="生效范例"></p>
+<p>####第三步：安装更新版本的工具</p>
+<blockquote>
+<p>sudo npm install n -g  </p>
+</blockquote>
+<p>####第四步：更新版本</p>
+<blockquote>
+<p>sudo n stable</p>
+</blockquote>
+<p>如果看到出现<code>installed：版本号</code>则说明安装成功</p>
+<p>####第五步:安装hexo</p>
+<blockquote>
+<p>sudo npm install -g hexo</p>
+</blockquote>
+<p><strong>注意</strong>：若有命令输入后安装不成功，多运行几次命令就可以啦，以及有更新完之后终端输入<code>node -v</code>与<code>npm -v</code>还是以前的版本，这不代表你没有升级哦，只需重启一个新的终端查看版本即可。</p>
+<p>####第六步：进入我们的hexo<br>安装成功后，在主目录下建立一个文件夹，我这里就是<code>/home/blog</code>,这个文件夹其实就是我们的博客的所有内容。（所以如果以后出现什么问题，我们不用害怕，大不了直接将相应的文件夹删掉即可）<br>进入<code>/home/blog</code>文件夹路径下</p>
+<blockquote>
+<p>hexo init</p>
+</blockquote>
+<p>时间会有些长，结束之后我们进入<code>/home/blog</code>后可以看到：  </p>
+<p><img src="./assets/hexo2.png" alt="文件"></p>
+<p>然后我们进行hexo的生成以及开启</p>
+<blockquote>
+<p>hexo g<br>hexo s</p>
+</blockquote>
+<p>启动成功之后我们进入本地<code>localhost:4000</code>就可以看到自己的blog啦！</p>
+<p>###部署hexo到Github<br>作为博客我们当然不可以只在本地打开，所以我们将其部署到Github中，更加方便浏览已经更加专业。</p>
+<p>####第一步:创建一个新的仓库<br>登录到Github上。然后New Repository，<strong>注意</strong>用户部署个人博客的github仓库的命名必须符合特定的要求才可以（一定要与你的用户名相同）例如：</p>
+<p><img src="./assets/hexo3.png" alt="仓库"></p>
+<p>创建之后呢你会看到一个SSH(类似于网址)</p>
+<p>####第二步：在<code>/home/blog</code>目录下装一个部署插件</p>
+<blockquote>
+<p>sudo npm install –save hexo-deployer-git     </p>
+</blockquote>
+<p><strong>注意</strong>：若一次不成功，多试几次就好了</p>
+<p>####第三步：进行_config.yml的设置<br>打开<code>_config.yml</code>，在<code>#Deployment</code>下进行设置</p>
+<p><img src="./assets/hexo4.png" alt="设置"><br><strong>注意</strong>：上图的<code>repo：</code>的链接就第一步中新建仓库后生成的SSH链接</p>
+<p>####第四步：进行部署<br>在修改完<code>_config.yml</code>之后我们就可以进项部署了</p>
+<blockquote>
+<p>hexo d</p>
+</blockquote>
+<p>之后终端会提醒你输入Github的用户名以及密码。</p>
+<p>####第五步：启动hexo<br>在url中输入：<a href="https://t" target="_blank" rel="noopener">https://t</a> <em>yourName</em>.github.io，多刷新几次就会出现啦！</p>
+<p>###附录：<br>在部署的过程中可能会报错，意思是提醒你没有配置你的github，我们可直接在终端中输入：</p>
+<blockquote>
+<p>git config –global user.name “yourName”<br>git config –global user.eamil “<a href="mailto:email@example.com" target="_blank" rel="noopener">email@example.com</a></p>
+</blockquote>
+<p>其中yourname 是输入你自己的用户名，<a href="mailto:email@example.com" target="_blank" rel="noopener">email@example.com</a>输入你自己的注册邮箱。</p>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者：<a>Tangrc</a>
-            <p>原文链接：<a href="http://yoursite.com/2019/08/01/hello-world/">http://yoursite.com/2019/08/01/hello-world/</a>
-            <p>发表日期：<a href="http://yoursite.com/2019/08/01/hello-world/">August 1st 2019, 4:48:53 pm</a>
-            <p>更新日期：<a href="http://yoursite.com/2019/08/01/hello-world/">July 28th 2019, 7:06:09 pm</a>
+            <p>原文链接：<a href="http://yoursite.com/2019/08/03/ubuntu 16.04安装hexo/">http://yoursite.com/2019/08/03/ubuntu 16.04安装hexo/</a>
+            <p>发表日期：<a href="http://yoursite.com/2019/08/03/ubuntu 16.04安装hexo/">August 3rd 2019, 12:06:18 pm</a>
+            <p>更新日期：<a href="http://yoursite.com/2019/08/03/ubuntu 16.04安装hexo/">August 3rd 2019, 2:13:49 pm</a>
             <p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -424,17 +469,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2019/08/02/测试/" title= "测试">
-                    <div class="nextTitle">测试</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2019/07/28/My-first-blog/" title= "My first blog">
-                    <div class="prevTitle">My first blog</div>
+                <a href= "/2019/08/02/测试/" title= "测试">
+                    <div class="prevTitle">测试</div>
                 </a>
             
         </li>
@@ -554,7 +594,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+        
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
