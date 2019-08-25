@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Hello World · Tangrc&#39;s Studio</title>
+    <title>转置卷积 · Tangrc&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/" >Tangrc&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Hello World</a>
+                <a href="#" class="post-name">转置卷积</a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Hello World
+            转置卷积
             <!-- 404 -->
             
         </h1>
@@ -266,12 +266,12 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">73</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2k</span>阅读时长: <span class="post-count reading-time">7 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/08/01</span>
+                    <span class="post-intro-time">2019/08/25</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -395,28 +395,30 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h1 id="转置卷积（反卷积）"><a href="#转置卷积（反卷积）" class="headerlink" title="转置卷积（反卷积）"></a>转置卷积（反卷积）</h1><p>在阅读了《 A gudie to convolution arithmetic for deep Learning》论文之后，对于卷积网络有了很大的收获，同时对于本论文中的难点–转置卷积进行了重点阅读，在这里总结一下相应的知识点</p>
+<h2 id="转置卷积的定义"><a href="#转置卷积的定义" class="headerlink" title="转置卷积的定义"></a>转置卷积的定义</h2><p>转置卷积（Transposed Convolution）又称为反卷积（Deconvolution）。在PyTorch中可以使用torch.nn.ConvTranspose2d()来调用，在Caffe中也有对应的层deconv_layer。<br>转置卷积常常用于CNN中对特征图进行上采样，比如语义分割和超分辨率任务中。之所以叫转置卷积是因为，它其实是把我们平时所用普通卷积操作中的卷积核做一个转置，然后把普通卷积的输出作为转置卷积的输入，而转置卷积的输出，就是普通卷积的输入。这样说可能有点绕，我们可以参照CNN中的反向传播过程来理解，转置卷积形式上就和一个卷积层的反向梯度计算相同。既然是输入输出对调，那么就有两个很重要的特性：</p>
+<blockquote>
+<ul>
+<li>转置的卷积核变为了普通卷积核的转置</li>
+<li>如果把由输入特征图到输出特征图的计算过程画成一个计算图，那么输入输出元素的连接关系是不变的</li>
+</ul>
+</blockquote>
+<h2 id="将卷积转化为矩阵相乘"><a href="#将卷积转化为矩阵相乘" class="headerlink" title="将卷积转化为矩阵相乘"></a>将卷积转化为矩阵相乘</h2><p>我们可以将图像的卷积过程转变成矩阵相乘的过程，比如说下面的这个卷积的过程：<br><img src="/2019/08/25/转置卷积/conva.png" alt="卷积-矩阵"></p>
+<p>上图中最左边的是一个卷积核，中间的是一个原始的卷积过程，蓝色部分 4×4是输入 input feature map ，而绿色部分2×2 是输出 output feature map 部分，其中深蓝色对应一个卷积核的大小 (3*3) ，上面的卷积的过程共经历 4 次卷积。<br>假如我们将原始图像按照上图中最右边所标注的顺序展开为列向量，并记为向量 X，将得到的向量式的 feature map 作为输出并记为 Y ，则卷积的过程可以表示如下的这种形式：<br><img src="/2019/08/25/转置卷积/convb.png" alt="卷积-矩阵"></p>
+<p>以矩阵 C 的第一行为例，其实非零权重的位置与上图左右边标注的位置是一样的；同理第二行与第二次卷积运算是一样的……。经过上面的运算我们会得到一个 4×1  大小的向量，将这个向量按照展开图像的反向顺序，重构成为一个矩阵，即可得到卷积所对应的输出。</p>
+<p>  <strong>这样，卷积的过程就转变为了一个稀疏的权重矩阵与一个图像向量相乘的过程。所以我们可以知道，通过卷积核可以定义两个矩阵，一个是对应前向传播的矩阵 C ，另一个是对应反向传播的矩阵 C^T</strong></p>
+<h2 id="转置卷积"><a href="#转置卷积" class="headerlink" title="转置卷积"></a>转置卷积</h2><p> <strong>转置卷积是通过交换前向传播与反向传播得到的</strong>，还有一种说法是核定义了卷积，但是它定的是直接卷积还是转置卷积是由前向和反向的计算方式得到的。所以定义分别乘以 C 和 C^T 来计算前向传播和反向传播的是直接卷积（也就是常说的卷积），使用 C^T 和 C 来计算反向传播和前向传播的是转置卷积。<br> <strong>总可以使用直接卷积来模拟转置卷积</strong>，但是由于要在行列之间补零，所以执行的效率会低。通过后面的分析，我们也可以认为，<strong>转置卷积实际上就是卷积</strong>。</p>
+<h2 id="转置卷积的计算"><a href="#转置卷积的计算" class="headerlink" title="转置卷积的计算"></a>转置卷积的计算</h2><p>由论文前部分的内容已经知道，卷积神经网络的 out feature map 可以通过下面的等式进行计算：<br><img src="/2019/08/25/转置卷积/convd.png" alt="卷积-矩阵"><br>这里我们只考虑一条边，因为另外一条边是一样的道理。转置卷积的计算其实很简单，实际上就是求上面那个等式中的 W1，很容易得到如下的结果<br><img src="/2019/08/25/转置卷积/convc.png" alt="卷积-矩阵"><br>分析上面的表达式我们可以看到，W2 的形式与 W1的形式是相同的，当 S  为原来的倒数且 F−2P=1 。这也对应上了上面的结论，总可以使用直接卷积来模拟转置卷积。<br>下面我们具体举几个例子来说明转置卷积的计算过程。<br><img src="/2019/08/25/转置卷积/conve.png" alt="卷积-矩阵"><br>如上图所示，第一行是卷积的过程，第二行是一个反卷积的过程。卷积和转置卷积是一对相关的概念，转置卷积，你得告诉我你针对谁是转置卷积。在上图中，卷积过程是在一个 4×4 大小，padding =0 的 feature map 上使用一个 3×3 大小的卷积核进行 s=1 的卷积计算，输出的 output feature map 大小为 2×2 。<br>这个时候，根据 W1=S(W2−1)−2P+F=1×(2−1)−2×0+3=4 可知输出的 output feature map 的大小为 4×4 但是需要注意的是这里根据 W1=S(W2−1)−2P+F 计算只是输出 feature map 的大小。如果将转置卷积以卷积的形式实现出来，那么它与上图中第二行是相对应的，卷积核与步长与原来相等，步长为原来的倒数，但是的 padding 值需要通过下面这种方式计算<br><img src="/2019/08/25/转置卷积/convf.png" alt="卷积-矩阵"><br>其中P^T 是转置卷积中 padding 的大小，F 是直接卷积中卷积核的大小，P 是直接卷积中 padding 的大小。<br>另外我们可以以一种较为直觉的角度去理解卷积和反卷积。在上图中的第一行，我们看到代表输入的蓝色矩阵中的 1 实际上只对计算代表输出的绿色矩阵中的 1 有贡献，对绿色矩阵中的其他值并没有贡献。因为直接卷积的输入是转置卷积的输出，转置卷积的输出是直接卷积的输入，所以第二行绿色矩阵中的 1 实际是与第一行蓝色矩阵中的 1 相对应的，而第一行蓝色矩阵中的 1 有只影响第一行绿色矩阵中的 1，所以在计算转置卷积的过程中，绿色矩阵中 1 的值只与蓝色矩阵中 1 的值有关，其他的位置都补零了；我们可以相同的思想思考剩下的结果。</p>
+<h2 id="步长小于1的转置卷积"><a href="#步长小于1的转置卷积" class="headerlink" title="步长小于1的转置卷积"></a>步长小于1的转置卷积</h2><p>由于转置卷积的步长是直接卷积的倒数，因此当直接卷积的步长 s&gt;1 的时候，那么转置卷积的步长就会是分数，这也是转置卷积又称为分数步长卷积的原因。在前一个例子中，我们所处理的都是直接卷积步长为1 的例子，所以可以认为直接卷积与转置卷积的步长相等。当转置卷积的步长小于1的时候，我们可以通过下面的例子有一个直接的了解。<br><img src="/2019/08/25/转置卷积/convg.png" alt="卷积-矩阵"><br>如上图是一个输入 feature map 为 5×5，卷积核大小为 3×3 ，步长 s=2 的直接卷积的转置卷积，此时的转置卷积的输入是在 2×2 的矩阵间进行插孔得到的。首先计算此时转置卷积输出的大小，我们发现与之前的计算方法是一样的:<br><img src="/2019/08/25/转置卷积/convh.png" alt="卷积-矩阵"><br>果然通过之前推导出的公式计算出了与上图相同的结果，这时我们计算下转置卷积中 padding 的大小<br><img src="/2019/08/25/转置卷积/convi.png" alt="卷积-矩阵"><br>很明显 padding 的计算结果也是符合上面的公式要求的。之后就是最关键的部分了，如何体现出步长是分数步长。在原始的卷积中插入数字 0，这使得内核以比单位步幅的速度移动慢，具体的在输入的每两个元素之间插入 s−1 s-1s−1 个 0。所以此时转置卷积的输入尺寸大小由原来的 W2 变为 W2+(W2−1)(s−1)</p>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者：<a>Tangrc</a>
-            <p>原文链接：<a href="http://yoursite.com/2019/08/01/hello-world/">http://yoursite.com/2019/08/01/hello-world/</a>
-            <p>发表日期：<a href="http://yoursite.com/2019/08/01/hello-world/">August 1st 2019, 4:48:53 pm</a>
-            <p>更新日期：<a href="http://yoursite.com/2019/08/01/hello-world/">July 28th 2019, 7:06:09 pm</a>
+            <p>原文链接：<a href="http://yoursite.com/2019/08/25/转置卷积/">http://yoursite.com/2019/08/25/转置卷积/</a>
+            <p>发表日期：<a href="http://yoursite.com/2019/08/25/转置卷积/">August 25th 2019, 3:46:58 pm</a>
+            <p>更新日期：<a href="http://yoursite.com/2019/08/25/转置卷积/">August 25th 2019, 4:36:48 pm</a>
             <p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -424,13 +426,13 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2019/08/03/ubuntu 16.04安装hexo/" title= "Hexo+Github部署静态博客">
-                    <div class="nextTitle">Hexo+Github部署静态博客</div>
-                </a>
-            
         </li>
         <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/08/19/8-18-暑假学校/" title= "8.18暑假学校">
+                    <div class="prevTitle">8.18暑假学校</div>
+                </a>
             
         </li>
     </ul>
@@ -549,7 +551,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#转置卷积（反卷积）"><span class="toc-number">1.</span> <span class="toc-text">转置卷积（反卷积）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#转置卷积的定义"><span class="toc-number">1.1.</span> <span class="toc-text">转置卷积的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将卷积转化为矩阵相乘"><span class="toc-number">1.2.</span> <span class="toc-text">将卷积转化为矩阵相乘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#转置卷积"><span class="toc-number">1.3.</span> <span class="toc-text">转置卷积</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#转置卷积的计算"><span class="toc-number">1.4.</span> <span class="toc-text">转置卷积的计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步长小于1的转置卷积"><span class="toc-number">1.5.</span> <span class="toc-text">步长小于1的转置卷积</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
